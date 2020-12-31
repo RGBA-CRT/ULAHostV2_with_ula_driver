@@ -21,9 +21,11 @@ ULAHostV2 with ula_driver_libusb mod
 1. あとは通常通りULA-HostV2を使用します。
 
 # how to use ULA-GP
+手動でFirmwareを転送することでULA-GPを使用する事ができます。
+
 1. ULAHostV2を起動します。デバイスの接続画面が現れます。
 1. ファーム転送後のULAを選択し、Connectボタンを押します。
-1. Program Uploadでula_gp_gba.mb.gbaを転送します
+1. Download ProgramでEWRAMへula_gp_gba.mb.gbaを転送します
 1. ULAHostV2を終了し、再度ULAHostV2を起動します。
 1. デバイス接続画面にula_gp.bixをD&Dします。
 1. Transferボタンを押します。
