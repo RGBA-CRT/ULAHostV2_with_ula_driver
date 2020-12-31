@@ -35,6 +35,8 @@ protected:
 	//{{AFX_MSG(CAboutDlg)
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedOk();
 };
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
@@ -54,6 +56,7 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//{{AFX_MSG_MAP(CAboutDlg)
 		// メッセージ ハンドラがありません。
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDOK, &CAboutDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -105,6 +108,10 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CULAHostV2Dlg メッセージ ハンドラ
 
+void CULAHostV2Dlg::SetDevice(u16 vid, u16 pid) {
+	m_ULADialog.SetDevice(vid, pid);
+}
+
 BOOL CULAHostV2Dlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
@@ -155,7 +162,7 @@ BOOL CULAHostV2Dlg::OnInitDialog()
 	char s8TargetDir[512];
 	GetCurrentDirectory(sizeof(s8TargetDir), s8TargetDir);
 	m_ULADialog.ulaSetTargetDir(s8TargetDir);
-	m_ULADialog.ulaFirmDownload("\\gba_boot.bix");
+	//m_ULADialog.ulaFirmDownload("\\gba_boot.bix");
 
 	m_pULATurnOnDlg = NULL;
 	
@@ -245,7 +252,7 @@ void CULAHostV2Dlg::OnButton1()
 		CString workCStr;
 
 		workCStr = dialog.GetPathName();
-		strcpy(fileNameBuf, workCStr.GetBuffer(512));
+		strcpy_s(fileNameBuf, workCStr.GetBuffer(512));
 
 
 		// Kick ULA !!
@@ -288,7 +295,7 @@ void CULAHostV2Dlg::OnButton2()
 		CString workCStr;
 
 		workCStr = dialog.GetPathName();
-		strcpy(fileNameBuf, workCStr.GetBuffer(512));
+		strcpy_s(fileNameBuf, workCStr.GetBuffer(512));
 
 		GBASwitch();
 
@@ -320,7 +327,7 @@ void CULAHostV2Dlg::OnButton3()
 		CString workCStr;
 
 		workCStr = dialog.GetPathName();
-		strcpy(fileNameBuf, workCStr.GetBuffer(512));
+		strcpy_s(fileNameBuf, workCStr.GetBuffer(512));
 
 		GBASwitch();
 
@@ -353,7 +360,7 @@ void CULAHostV2Dlg::OnButton4()
 		CString workCStr;
 
 		workCStr = dialog.GetPathName();
-		strcpy(fileNameBuf, workCStr.GetBuffer(512));
+		strcpy_s(fileNameBuf, workCStr.GetBuffer(512));
 
 		GBASwitch();
 
@@ -441,3 +448,9 @@ BOOL CULAHostV2Dlg::OnToolTipNotify(UINT id, NMHDR *pNMHDR, LRESULT *pResult)
 #define META_CLASS CULAHostV2Dlg
 #include ".\\ULADialog\ULATurnOnDialog.c"
 
+
+void CAboutDlg::OnBnClickedOk()
+{
+	// TODO: ここにコントロール通知ハンドラ コードを追加します。
+	OnOK();
+}

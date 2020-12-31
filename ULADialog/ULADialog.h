@@ -12,6 +12,7 @@
 #include "TYPE.H"
 #include "ezusbsys.h"
 #include "target_cmd.h"
+#include "../ula_driver/ula_driver.h"
 
 #include "CRC32.h"
 
@@ -60,6 +61,7 @@ class CULADialog : public CDialog
 {
 // Construction
 public:
+	void SetDevice(u16 vid, u16 pid);
 
 	void ulaStartUp(s32 aActionMode, char aFileName[]);
 	void ulaStartUpTemp(s32 aActionMode, char aFileName[]);
@@ -133,10 +135,10 @@ private:
 	u8 m_u8ULABuffer[BUFF_SIZE];
 
 	// USB handling
-	HANDLE m_hULA;
+	//HANDLE m_hULA;
 	unsigned long m_nbyte;
 	BOOLEAN m_ret;
-	BULK_TRANSFER_CONTROL m_bulkControl;
+	//BULK_TRANSFER_CONTROL m_bulkControl;
 
 
 	// File handling
@@ -159,6 +161,12 @@ private:
 
 	s32 m_tbl_backUpMemorySize[16];
 
+	afx_msg void OnBnClickedCancel();
+
+	u16 m_vid, m_pid;
+	ula_handle_t m_ula_handle;
+public:
+	afx_msg void OnDestroy();
 };
 
 //{{AFX_INSERT_LOCATION}}

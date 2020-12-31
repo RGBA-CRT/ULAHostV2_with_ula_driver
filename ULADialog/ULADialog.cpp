@@ -31,6 +31,10 @@ CULADialog::CULADialog(CWnd* pParent /*=NULL*/)
 
 	m_pThread = NULL;
 	m_bThread = FALSE;
+
+	m_vid = 0;
+	m_pid = 0;
+	m_ula_handle = 0;
 }
 
 CULADialog::~CULADialog()
@@ -52,7 +56,14 @@ BEGIN_MESSAGE_MAP(CULADialog, CDialog)
 	//{{AFX_MSG_MAP(CULADialog)
 	ON_BN_CLICKED(IDC_ABORT, OnAbort)
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDCANCEL, &CULADialog::OnBnClickedCancel)
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
+
+void CULADialog::SetDevice(u16 vid, u16 pid) {
+	m_vid = vid;
+	m_pid = pid;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CULADialog message handlers
@@ -125,8 +136,9 @@ BOOL CULADialog::OnInitDialog()
 void CULADialog::OnCancel() 
 {
 	// TODO: Add extra cleanup here
-	CloseHandle(m_hULA);
-	
+	//CloseHandle(m_hULA);
+
+//	EndDialog(IDOK);
 	CDialog::OnCancel();
 }
 
@@ -135,6 +147,7 @@ void CULADialog::OnCancel()
 UINT CULADialog::ThreadFuncDownload(LPVOID pParam)
 {
 	((CULADialog*)pParam)->ulaDownloadBody();
+	((CULADialog*)pParam)->PostMessage(WM_DESTROY, 0, 0);
 
 	return 0;
 }
@@ -142,6 +155,7 @@ UINT CULADialog::ThreadFuncDownload(LPVOID pParam)
 UINT CULADialog::ThreadFuncUpload(LPVOID pParam)
 {
 	((CULADialog*)pParam)->ulaUploadBody();
+	((CULADialog*)pParam)->PostMessage(WM_DESTROY, 0, 0);
 
 	return 0;
 }
@@ -179,12 +193,12 @@ void CULADialog::ulaSetActionMode(s32 aActionMode)
 
 void CULADialog::ulaSetTargetFile(char aFileName[])
 {
-	strcpy(m_targetFilename, aFileName);
+	strcpy_s(m_targetFilename, aFileName);
 }
 
 void CULADialog::ulaSetTargetDir(char aTargetDir[])
 {
-	strcpy(m_s8TargetDir, aTargetDir);
+	strcpy_s(m_s8TargetDir, aTargetDir);
 }
 
 
@@ -192,7 +206,7 @@ void CULADialog::ulaBulkOutData(char aMsg[], u8 *aData, u32 aDataSize)
 {
 	m_ret = FALSE;
 
-	m_bulkControl.pipeNum = BULK_OUT_PIPE;
+/*	m_bulkControl.pipeNum = BULK_OUT_PIPE;
 	m_ret = DeviceIoControl(m_hULA,
 						IOCTL_EZUSB_BULK_WRITE,
 						&m_bulkControl,
@@ -200,7 +214,8 @@ void CULADialog::ulaBulkOutData(char aMsg[], u8 *aData, u32 aDataSize)
 						aData,
 						aDataSize,
 						&m_nbyte,
-						NULL);
+						NULL);*/
+	m_ret = ula_data_out(m_ula_handle, aData, aDataSize);
 	if(m_ret == FALSE){
 		MessageBox(aMsg, "Project xLA");
 		exit (-1);
@@ -211,15 +226,17 @@ void CULADialog::ulaBulkInData(char aMsg[], u8 *aData, u32 aDataSize)
 {
 	m_ret = FALSE;
 
-	m_bulkControl.pipeNum = BULK_IN_PIPE;
-	m_ret = DeviceIoControl(m_hULA,
+	//m_bulkControl.pipeNum = BULK_IN_PIPE;
+	/*m_ret = DeviceIoControl(m_hULA,
 						IOCTL_EZUSB_BULK_READ,
 						&m_bulkControl,
 						sizeof(BULK_TRANSFER_CONTROL),
 						aData,
 						aDataSize,
 						&m_nbyte,
-						NULL);
+						NULL);*/
+	
+	m_ret = ula_data_in(m_ula_handle, aData, aDataSize, NULL);
 	if(m_ret == FALSE){
 		MessageBox(aMsg, "Project xLA", MB_ICONSTOP);
 		exit (-1);
@@ -230,7 +247,7 @@ void CULADialog::ulaBulkInData(char aMsg[], u8 *aData, u32 aDataSize)
 void CULADialog::ulaInit()
 {
 
-	m_hULA = CreateFile("\\\\.\\ezusb-0",
+	/*m_hULA = CreateFile("\\\\.\\ezusb-0",
 		GENERIC_WRITE,
 		FILE_SHARE_WRITE,
 		NULL,
@@ -243,6 +260,22 @@ void CULADialog::ulaInit()
 	else{
 		MessageBox("Could not find ULA system !!", "Project xLA", MB_ICONSTOP);
 		exit (-1);
+	}*/
+
+	if (m_vid == 0 && m_pid == 0) {
+		MessageBox("Device not selected.", "Project xLA", MB_ICONSTOP);
+		exit(-1);
+	}
+
+	if (m_ula_handle) {
+		//assert
+		ula_close(m_ula_handle);
+		m_ula_handle = NULL;
+	}
+
+	if (!ula_open(&m_ula_handle, m_vid, m_pid)) {
+		MessageBox("Failed to open ULA device.", "Project xLA", MB_ICONSTOP);
+		exit(-1);
 	}
 
 	// Target Reset
@@ -251,6 +284,10 @@ void CULADialog::ulaInit()
 
 void CULADialog::ulaFirmDownload(char aFirmFileName[])
 {
+#if 1
+	return;
+#else
+	// EZ-USB driver code
 	// For Firmware
 	FILE *fFirmware;
 	u8 firmBuffer[FIRM_SIZE];
@@ -262,7 +299,7 @@ void CULADialog::ulaFirmDownload(char aFirmFileName[])
 
 	char firmDir[512];
 
-	strcpy(firmDir, m_s8TargetDir);
+	strcpy_s(firmDir, m_s8TargetDir);
 	strcat(firmDir, aFirmFileName);
 
 
@@ -355,7 +392,7 @@ void CULADialog::ulaFirmDownload(char aFirmFileName[])
 		MessageBox("Could not find ULA system !!", "Project xLA", MB_ICONSTOP);
 		exit (-1);
 	}
-
+#endif
 }
 
 void CULADialog::ulaSilentDownload(char aTargetFileName[])
@@ -363,7 +400,7 @@ void CULADialog::ulaSilentDownload(char aTargetFileName[])
 	int i;
 	char firmDir[512];
 
-	strcpy(firmDir, m_s8TargetDir);
+	strcpy_s(firmDir, m_s8TargetDir);
 	strcat(firmDir, aTargetFileName);
 
 	// Get File Size
@@ -583,7 +620,7 @@ void CULADialog::ulaDownloadBody()
 				// Imp: Progress Bar update
 				m_wndProgressCtrl.SetPos(m_now_percent);
 
-				sprintf(msg,"%d", m_now_percent);
+				sprintf_s(msg,"%d", m_now_percent);
 				GetDlgItem(IDC_STATIC_TRANSFER_VALUE)->SetWindowText(msg);
 				m_wndProgressCtrl.UpdateWindow();
 			}
@@ -619,7 +656,7 @@ void CULADialog::ulaDownloadBody()
 			case 3:
 				crcrx = ~ulaCRC32FromGBA();
 				if (m_pCRC32->getCRC32() != crcrx){
-					sprintf(msg,"CRC %08x %08x", m_pCRC32->getCRC32(), crcrx);
+					sprintf_s(msg,"CRC %08x %08x", m_pCRC32->getCRC32(), crcrx);
 					MessageBox(msg, "Project xLA", MB_ICONSTOP);
 				}
 				break;
@@ -644,7 +681,7 @@ void CULADialog::ulaDownloadBody()
 
 	::Sleep(WAIT_FOR_BACKUP_RAM);			
 
-	OnCancel();
+	//OnCancel();
 }
 
 void CULADialog::ulaProgUploadSet(char aTargetFileName[])
@@ -799,7 +836,7 @@ void CULADialog::ulaUploadBody()
 				// Imp: Progress Bar update
 				m_wndProgressCtrl.SetPos(m_now_percent);
 
-				sprintf(msg,"%d", m_now_percent);
+				sprintf_s(msg,"%d", m_now_percent);
 				GetDlgItem(IDC_STATIC_TRANSFER_VALUE)->SetWindowText(msg);
 				m_wndProgressCtrl.UpdateWindow();
 			}
@@ -816,7 +853,7 @@ void CULADialog::ulaUploadBody()
 			case 0:
 				crcrx = ~ulaCRC32FromGBA();
 				if (m_pCRC32->getCRC32() != crcrx){
-					sprintf(msg,"CRC %08x %08x", m_pCRC32->getCRC32(), crcrx);
+					sprintf_s(msg,"CRC %08x %08x", m_pCRC32->getCRC32(), crcrx);
 					MessageBox(msg, "Project xLA", MB_ICONSTOP);
 				}
 		}
@@ -829,7 +866,7 @@ void CULADialog::ulaUploadBody()
 	m_pThread = NULL;
 	m_bThread = FALSE;
 
-	OnCancel();
+	//OnCancel();
 }
 
 void CULADialog::ulaExchangeForVBA()
@@ -856,7 +893,7 @@ void CULADialog::ulaExchangeForVBA()
 void CULADialog::ulaDispCartInfo()
 {
 	char msg[128];
-	sprintf(msg,"%dMbit", m_RomSize / (1024 * 1024) * 8);
+	sprintf_s(msg,"%dMbit", m_RomSize / (1024 * 1024) * 8);
 	GetDlgItem(IDC_MEMORYSIZE_STATIC)->SetWindowText(msg);
 
 	GetDlgItem(IDC_MEMORYTYPE_STATIC)->SetWindowText(tbl_memoryType[m_RomType]);
@@ -937,7 +974,7 @@ void CULADialog::ulaStartUpTemp(s32 aActionMode, char aFilename[])
 
 void CULADialog::ulaSetCommand(char aMsg[], u8 aCmd, u32 aP1, u32 aP2, u32 aP3)
 {
-	m_u8ULABuffer[ 0] = aCmd;
+	/*m_u8ULABuffer[ 0] = aCmd;
 	m_u8ULABuffer[ 1] = (u8)(aP1);
 	m_u8ULABuffer[ 2] = (u8)(aP1 >>  8);
 	m_u8ULABuffer[ 3] = (u8)(aP1 >> 16);
@@ -951,9 +988,9 @@ void CULADialog::ulaSetCommand(char aMsg[], u8 aCmd, u32 aP1, u32 aP2, u32 aP3)
 	m_u8ULABuffer[ 9] = (u8)(aP3);
 	m_u8ULABuffer[10] = (u8)(aP3 >>  8);
 	m_u8ULABuffer[11] = (u8)(aP3 >> 16);
-	m_u8ULABuffer[12] = (u8)(aP3 >> 24);
+	m_u8ULABuffer[12] = (u8)(aP3 >> 24);*/
 
-	m_ret = FALSE;
+	/*m_ret = FALSE;
 	m_bulkControl.pipeNum = BULK_OUT_PIPE;
 	m_ret = DeviceIoControl(m_hULA,
 						IOCTL_EZUSB_BULK_WRITE,
@@ -962,7 +999,8 @@ void CULADialog::ulaSetCommand(char aMsg[], u8 aCmd, u32 aP1, u32 aP2, u32 aP3)
 						&m_u8ULABuffer,
 						COMMAND_SIZE,
 						&m_nbyte,
-						NULL);
+						NULL);*/
+	m_ret = ula_send_command(m_ula_handle, aCmd, aP1, aP2, aP3);
 	if(m_ret == FALSE){
 		MessageBox(aMsg, "Project xLA");
 		exit (-1);
@@ -972,3 +1010,22 @@ void CULADialog::ulaSetCommand(char aMsg[], u8 aCmd, u32 aP1, u32 aP2, u32 aP3)
 }
 
 // EOF
+
+void CULADialog::OnBnClickedCancel()
+{
+	// TODO: ここにコントロール通知ハンドラ コードを追加します。
+	OnCancel();
+}
+
+
+void CULADialog::OnDestroy()
+{
+	CDialog::OnDestroy();
+
+	if (m_ula_handle) {
+		ula_close(m_ula_handle);
+		m_ula_handle = NULL;
+	}
+
+	EndDialog(IDOK);
+}

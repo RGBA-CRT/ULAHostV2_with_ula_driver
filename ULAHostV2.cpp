@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "ULAHostV2.h"
 #include "ULAHostV2Dlg.h"
+#include "FirmwareDialog.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -54,8 +55,21 @@ BOOL CULAHostV2App::InitInstance()
 	Enable3dControlsStatic();	// MFC と静的にリンクする場合はここをコールしてください。
 #endif
 
+	FirmwareDialog fwdlg;
+	if (fwdlg.DoModal() != IDOK) {
+		return FALSE;
+	}
+	
+	uint16_t vid, pid;
+	fwdlg.GetVidPid(&vid, &pid);
+	if (vid == 0 && pid == 0) {
+		return FALSE;
+	}
+
 	CULAHostV2Dlg dlg;
 	m_pMainWnd = &dlg;
+
+	dlg.SetDevice(vid, pid);
 	int nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
 	{

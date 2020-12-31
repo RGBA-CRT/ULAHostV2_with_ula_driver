@@ -22,6 +22,7 @@ public:
 	void EndULATurnOnDlg();
 	void GBASwitch();
 	BOOL OnToolTipNotify(UINT id, NMHDR *pNMHDR, LRESULT *pResult);
+	void SetDevice(u16 vid, u16 pid);
 
 	CULAHostV2Dlg(CWnd* pParent = NULL);	// 標準のコンストラクタ
 	~CULAHostV2Dlg();
@@ -43,7 +44,7 @@ public:
 
 	// ClassWizard は仮想関数のオーバーライドを生成します。
 	//{{AFX_VIRTUAL(CULAHostV2Dlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV のサポート
 	//}}AFX_VIRTUAL
     CBitmap bmpPC2GBACART;
@@ -71,6 +72,7 @@ protected:
 	afx_msg void OnButton5();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+
 };
 
 //{{AFX_INSERT_LOCATION}}
