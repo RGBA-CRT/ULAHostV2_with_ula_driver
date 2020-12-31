@@ -1,0 +1,30 @@
+#define COMMAND_SIZE	13
+#define RESPONSE_SIZE	12
+
+// For Target
+#define TARGET_INIT			0xFF
+#define TARGET_DOWNLOAD		0x00
+
+// For fwlib
+#define FWLIB_ROM_PROBE		0x01
+#define FWLIB_WRAM_LOADEXEC	0x02
+#define FWLIB_ROM_BERASE	0x03
+#define FWLIB_ROM_WRITE		0x04
+#define FWLIB_ROM_BWRITE	0x05
+#define FWLIB_READ			0x06
+#define FWLIB_WRITE			0x07
+#define FWLIB_FIND			0x08
+#define FWLIB_BOOT_ROM		0x09
+#define	FWLIB_SRAM2EWRAM	0x0a
+#define	FWLIB_EWRAM2SRAM	0x0b
+#define FWLIB_BU_PROBE		0x0c
+#define FWLIB_SRAM_READ		0x0d
+#define FWLIB_EEP_READ		0x0e
+#define FWLIB_EEP_WRITE		0x0f
+#define FWLIB_SRAM_WRITE	0x10
+#define FWLIB_FLASH_WRITE	0x11
+#define FWLIB_BLANK			0x20
+#define FWLIB_IS_PRO		0x21
+
+#define GBA_CART_ROM_ADDRESS	0x08000000
+#define GBA_BACK_RAM_ADDRESS	0x02010000

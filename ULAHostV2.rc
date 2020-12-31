@@ -1,0 +1,300 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Japanese resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
+#ifdef _WIN32
+LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
+#pragma code_page(932)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\ULAHostV2.rc2""  // Microsoft Visual C++ 以外のツールで編集されたリソース\r\n"
+    "#include ""afxres.rc""         // 標準のコンポーネント\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\ULAHostV2.ico"
+IDI_ICON1               ICON    DISCARDABLE     "res\\Gba1.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ULA_DIALOG DIALOGEX 0, 0, 155, 226
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "ULA System Information"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,101,4,50,14,NOT WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "Close",IDCANCEL,50,77,50,14
+    CONTROL         "Progress1",IDC_PROGRESS1,"msctls_progress32",WS_BORDER,
+                    19,150,116,15
+    CTEXT           "Data Transfer ...",IDC_STATIC,15,128,63,9
+    RTEXT           "0",IDC_STATIC_TRANSFER_VALUE,75,128,14,10
+    LTEXT           "% Completed",IDC_STATIC,93,128,43,8
+    PUSHBUTTON      "Abort",IDC_ABORT,59,176,31,14
+    LTEXT           "Memory Type :",IDC_STATIC,15,24,53,12,SS_CENTERIMAGE
+    LTEXT           "BackUp Memory Type :",IDC_STATIC,15,59,68,11,
+                    SS_CENTERIMAGE
+    LTEXT           "Memory Size :",IDC_STATIC,15,41,58,13,SS_CENTERIMAGE
+    GROUPBOX        "Data Transfer",IDC_STATIC,11,111,134,94
+    GROUPBOX        "Cart Information",IDC_STATIC,10,10,135,88
+    RTEXT           "????",IDC_BACKUP_MEMORY,88,58,47,12,SS_CENTERIMAGE,
+                    WS_EX_CLIENTEDGE
+    RTEXT           "????",IDC_MEMORYSIZE_STATIC,88,42,47,11,SS_CENTERIMAGE | 
+                    NOT WS_GROUP,WS_EX_CLIENTEDGE
+    RTEXT           "????",IDC_MEMORYTYPE_STATIC,88,24,46,12,SS_CENTERIMAGE,
+                    WS_EX_CLIENTEDGE
+    CTEXT           "(C) 2002 - 2003 TeamKNOx",IDC_STATIC,19,211,121,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ULA_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 151
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 223
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_PC2CART             BITMAP  DISCARDABLE     "res\\PC2CART.bmp"
+IDB_PC2GBACART          BITMAP  DISCARDABLE     "res\\PC2GBACART.bmp"
+IDB_GBACART2PC          BITMAP  DISCARDABLE     "res\\GBACART2PC.bmp"
+IDB_CART2PC             BITMAP  DISCARDABLE     "res\\CART2PC.bmp"
+IDB_CARTINFO            BITMAP  DISCARDABLE     "res\\GetCARTInfo.bmp"
+#endif    // Japanese resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ULA_TURN_ON_DIALOG DIALOGEX 0, 0, 158, 44
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "GBA Turn On Waiting ..."
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,101,6,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "ｷｬﾝｾﾙ",IDCANCEL,101,24,50,14,NOT WS_VISIBLE
+    CTEXT           "Turn On GBA with [SELECT] + [START]",
+                    IDC_STATIC_TURN_GBA,13,12,129,18,SS_CENTERIMAGE
+END
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About ULAHostV2"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "ULAHostV2 Version 1.0",IDC_STATIC,40,10,119,8,
+                    SS_NOPREFIX
+    LTEXT           "Copyright (C) 2003",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "OK",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_ULAHOSTV2_DIALOG DIALOGEX 0, 0, 67, 160
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "ULAHost_V2"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,17,7,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Cancel",IDCANCEL,17,23,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Button1",IDC_BUTTON1,3,3,60,27,BS_BITMAP
+    PUSHBUTTON      "Button2",IDC_BUTTON2,3,34,60,27,BS_BITMAP
+    PUSHBUTTON      "Button3",IDC_BUTTON3,3,66,60,27,BS_BITMAP
+    PUSHBUTTON      "Button4",IDC_BUTTON4,3,97,60,27,BS_BITMAP
+    PUSHBUTTON      "Button5",IDC_BUTTON5,3,128,60,27,BS_BITMAP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ULA_TURN_ON_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 151
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 37
+    END
+
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "ULAHostV2 MFC Application\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "ULAHostV2\0"
+            VALUE "LegalCopyright", "Copyright (C) 2003\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "ULAHostV2.EXE\0"
+            VALUE "ProductName", "ULAHostV2 Application\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About ULAHostV2..."
+    IDS_STRING_PC2GBACART   "Program download to GBA self/Flash Cart."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\ULAHostV2.rc2"  // Microsoft Visual C++ 以外のツールで編集されたリソース
+#include "afxres.rc"         // 標準のコンポーネント
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
