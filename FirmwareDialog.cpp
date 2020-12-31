@@ -1,9 +1,9 @@
 // FirmwareDialog.cpp : ŽÀ‘•ƒtƒ@ƒCƒ‹
 //
 
-#include "FirmwareDialog.h"
-#include "ULAHostV2.h"
 #include "stdafx.h"
+#include "ULAHostV2.h"
+#include "FirmwareDialog.h"
 
 #include <setupapi.h>
 #include <string>
