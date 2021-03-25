@@ -34,5 +34,7 @@ ULAHostV2 with ula_driver_libusb mod
 ## thanks
 ULAの開発とソースコードの公開、さらに本改変版の公開を快諾していただいた[TeamKNOx](http://www2.teamknox.com/)様にお礼申し上げます。
 
+本ソフトウェアは[libusb](https://github.com/libusb/libusb)(LGPL)を使用しています。
+
 ----
 Project url: https://github.com/RGBA-CRT/ULAHostV2_with_ula_driver
