@@ -1,7 +1,7 @@
 MIT License
 
 ULAHostV2_with_ula_driver:
-Copyright (c) 2020 RGBA_CRT
+Copyright (c) 2021 RGBA_CRT
 
 Original ULAHostV2:
 Copyright (c) 2003 TeamKNOx
@@ -23,3 +23,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+--------
+
+NOTE: This software depends on ula_driver_libusb. That license is CC0. 
+NOTE: ula_driver_libusb depends on libusb. That license is LGPL according to the original. 
